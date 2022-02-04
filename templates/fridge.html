@@ -1,0 +1,53 @@
+<html>
+    <head>
+        
+{% include 'cdn_css.html' %}
+{% include 'navbar.html' %}
+<!-- bootstrap4 -->
+<!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+<!-- custom styles -->
+<link href="/static/css/ui.css" rel="stylesheet" type="text/css">
+<link href="/static/css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)">
+    </head>
+    <body>
+        <section class="intro">
+            <div class="bg-image h-100" style="
+                    background-image: url(https://mdbootstrap.com/img/Photos/new-templates/search-box/img5.jpg);
+                  ">
+              <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0,0,0, 0.5);">
+                <div class="container">
+                  <p class="h2 mb-4 text-white">Cook with the ingredients you have <br> FoodPro Inc.</p>
+                  <div class="card">
+                    <div class="card-body p-4">
+                      <div class="row">
+                        <div class="col-12 mb-4">
+                          <div class="input-group">
+                            <div class="form-outline flex-fill">
+                            <form action="/from_fridge/2046" method="post">
+                              <input type="search" id="form1" name="search_tags" class="form-control form-control-lg" />
+                              <label class="form-label" for="form1">YOUR INGREDIENTS</label>
+                              <div class="form-helper pt-2"><span class="font-weight-bold">Suggested:</span> 
+                                <a href="#!" class="text-black-50">Onion,</a>  
+                                <a href="#!" class="text-black-50">lemon,</a>  
+                                <a href="#!" class="text-black-50">Carrots,</a>  
+                                <a href="#!" class="text-black-50">Apple</a>
+                                <a href="#!" class="text-black-50">more</a>
+                              </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                              <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+    </body>
+    {% include 'cdn_js.html' %}
+
+</html>

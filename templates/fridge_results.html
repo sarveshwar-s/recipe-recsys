@@ -1,0 +1,46 @@
+<html>
+    <head>
+
+{% include 'cdn_css.html' %}
+{% include 'navbar.html' %}
+<!-- bootstrap4 -->
+<!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+
+<!-- custom styles -->
+<link href="/static/css/ui.css" rel="stylesheet" type="text/css">
+<link href="/static/css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)">
+
+
+    </head>
+    <body>
+       <div class="container">
+        <h2>You can cook these with your ingredients</h2>
+        <hr>
+       <!-- Adding similar cards -->
+       
+      {% for rowitem in range(((sim_names|length)//3)) %}
+        <div class="row">
+          {% for item in range(rowitem*3, (rowitem*3)+3) %}
+          <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">{{sim_names[item]}}</h5>
+                      <p class="card-text">Ratings: {{sim_ratings[item]}}</p>
+                      <p class="card-text"> Orders: {{sim_review_count[item] }} </p>
+                      <a href="/item/{{sim_id[item]}}" class="btn btn-primary">Explore More</a>
+                    </div>
+                  </div>
+            </div>
+
+            {% endfor %}
+            
+          </div> <!-- row close tag-->
+          <br>
+          {% endfor %}
+      
+        </div>
+    </body>
+    {% include 'footer.html' %}
+    {% include 'cdn_js.html' %}
+
+</html>

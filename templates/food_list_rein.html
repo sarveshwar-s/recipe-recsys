@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Food RecSys</title>
+        {% include 'cdn_css.html' %}
+        {% include 'navbar.html' %}
+        <style>
+            .card-img-top {
+       width: 100%;
+       height: 15vw;
+       object-fit: cover;
+   }
+          </style>
+    </head>
+    <body>
+      <div class="container">
+        {% if session["logged_in"] %}
+        <h1>Recipes for you</h1>
+        {% else %}
+        <h1>Trending Recipes</h1>
+        {% endif %}
+        {% for rowitem in range(((recipe_name|length)//3)) %}
+        <div class="row">
+          {% for item in range(rowitem*3, (rowitem*3)+3) %}
+          <div class="col-4">
+                <div class="card h-100">
+                    <div class="card-img-top bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                      <img src={{recipe_image[item]}} class="img-fluid"/>
+                      <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                      </a>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{recipe_name[item]}}</h5>
+                      <p class="card-text">{{recipe_desc[item]}}</p>
+                      <a href="/items/reinforcement/{{recipe_id[item]}}" class="btn btn-primary">Explore More</a>
+                    </div>
+                  </div>
+            </div>
+
+            {% endfor %}
+            
+          </div> <!-- row close tag-->
+          <br>
+          {% endfor %}
+        </div> <!-- container close tag-->
+    </body>
+    {% include 'footer.html' %}
+    {% include 'cdn_js.html' %}
+</html>
