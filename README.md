@@ -6,7 +6,7 @@ Food Recipe RecSys
 * Returns Trending recipes if the user is not logged in 
 * Returns Personalized recipes if the user is logged into the system
 
-### items/<item_number>:
+### /items/<item_number>:
 * Returns the description about the passed item number 
 * Secondly, it also returns the items similar to the selected one. 
 
