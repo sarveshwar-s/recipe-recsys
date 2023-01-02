@@ -243,7 +243,6 @@ def description_other(item_number):
     db.close()
 
     df_real_1 = pd.read_csv("data/recipe_partial.csv")
-    # print(df_real_1.loc[df_real_1["RecipeId"] == int(item_number)])
     # df_r = pd.read_csv("data/recipes.csv")
     rec_desc = df_real_1[df_real_1["RecipeId"] == int(item_number)]
     recipe_desc_name = rec_desc["Name"].values[0]

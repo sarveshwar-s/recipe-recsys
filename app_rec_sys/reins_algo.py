@@ -1,9 +1,9 @@
 import sys, os
-import numpy as np 
+import numpy as np
 import pandas as pd
 
-# Epsilon greedy algorithm 
-def epsilon_greedy(dataset_path:str)-> pd.DataFrame:
+# Epsilon greedy algorithm
+def epsilon_greedy(dataset_path: str) -> pd.DataFrame:
 
     df = pd.read_csv(dataset_path)
 
@@ -20,7 +20,7 @@ def epsilon_greedy(dataset_path:str)-> pd.DataFrame:
     avg_rewards = []
 
     # plotting using dataframe
-    df_reward_comparison = pd.DataFrame(avg_rewards, columns=['A/B/n'])
+    df_reward_comparison = pd.DataFrame(avg_rewards, columns=["A/B/n"])
 
     # Main Algorithm
     ad_chosen = np.random.randint(n_ads)
@@ -35,14 +35,14 @@ def epsilon_greedy(dataset_path:str)-> pd.DataFrame:
             ad_chosen = np.random.randint(n_ads)
         else:
             ad_chosen = np.argmax(Q)
-    df_reward_comparison['e-greedy: {}'.format(eps)] = avg_rewards
+    df_reward_comparison["e-greedy: {}".format(eps)] = avg_rewards
 
     # Dataframe with N and Q values
     final_selection_df = pd.DataFrame(data=N, columns=["N_VALUE"])
     final_selection_df["Q_VALUE"] = Q
 
     # Takes good rewards
-    good_rewards = final_selection_df[(final_selection_df["N_VALUE"] > 0) & (final_selection_df["Q_VALUE"]==5)]
+    good_rewards = final_selection_df[(final_selection_df["N_VALUE"] > 0) & (final_selection_df["Q_VALUE"] == 5)]
     food_index = good_rewards.sort_values(by=["N_VALUE"], ascending=False).index[:20]
 
     located_food_index_df = df.iloc[food_index]
@@ -51,14 +51,12 @@ def epsilon_greedy(dataset_path:str)-> pd.DataFrame:
 
 
 # UCB algorithm
-def ucb(dataset_path: str)-> pd.DataFrame:
+def ucb(dataset_path: str) -> pd.DataFrame:
     df = pd.read_csv(dataset_path)
-
 
     observation_space = df["user_id"]
     action_space = df["recipe_id"]
     reward = df["rating"]
-
 
     c = 1
     n_prod = 10000
@@ -71,8 +69,8 @@ def ucb(dataset_path: str)-> pd.DataFrame:
 
     # Main algorithm
     for t in range(1, n_prod + 1):
-        if any(N==0):
-            ad_chosen = np.random.choice(ad_indices[N==0])
+        if any(N == 0):
+            ad_chosen = np.random.choice(ad_indices[N == 0])
         else:
             uncertainty = np.sqrt(np.log(t) / N)
             ad_chosen = np.argmax(Q + c * uncertainty)
@@ -88,17 +86,20 @@ def ucb(dataset_path: str)-> pd.DataFrame:
     final_selection_df_ucb["Q_VALUE"] = Q
 
     # Takes good rewards
-    good_rewards_ucb = final_selection_df_ucb[(final_selection_df_ucb["N_VALUE"] > 0) & (final_selection_df_ucb["Q_VALUE"]==5)]
+    good_rewards_ucb = final_selection_df_ucb[
+        (final_selection_df_ucb["N_VALUE"] > 0) & (final_selection_df_ucb["Q_VALUE"] == 5)
+    ]
     food_index_ucb = good_rewards_ucb.sort_values(by=["N_VALUE"], ascending=False).index[:20]
 
     located_ucb = df.iloc[food_index_ucb]
-    
+
     return located_ucb
 
-# dataset_relative_path = "data/interactions_train.csv"
-# predictions = epsilon_greedy(dataset_path = dataset_relative_path)
-# print(predictions)
 
-# predictions_ucb = ucb(dataset_path= dataset_relative_path)
-# print(predictions_ucb)
+if __name__ == "__main__":
+    dataset_relative_path = "data/interactions_train.csv"
+    predictions_epsilon_greedy = epsilon_greedy(dataset_path=dataset_relative_path)
+    print(f"Epsilon greedy predictions: {predictions_epsilon_greedy}")
 
+    predictions_ucb = ucb(dataset_path=dataset_relative_path)
+    print(f"UCB Predictions: {predictions_ucb}")
