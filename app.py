@@ -49,7 +49,6 @@ def home_page():
             rein_sql = "select * from reinforcement_recsys where user_id=" + str(session["user_id"]) + " limit 18"
             final_display = pd.read_sql(rein_sql, con=db_rein)
             recipe_name = list(final_display["recipe_name"][:18])
-            print(recipe_name)
             recipe_desc = list(final_display["recipe_desc"][:18])
             recipe_image = list(final_display["recipe_image"][:18])
             recipe_id = list(final_display["recipe_id"][:18])
@@ -65,7 +64,6 @@ def home_page():
 
             knn_user_id = int(session["user_id"])
             if knn_user_id == 4657:
-                print("Taking other paramters")
                 session["using_svd"] = True
                 df_temp = pd.read_csv("data/svd_partial.csv")
                 recipe_name = list(df_temp["Name"][:18])
@@ -169,7 +167,6 @@ def description(item_number):
     db.close()
 
     if session["using_svd"]:
-        print("usnig other params")
         df_real = pd.read_csv("data/svd_partial.csv")
         # df_r = pd.read_csv("data/recipes.csv")
         rec_desc = df_real[df_real["RecipeId"] == int(item_number)]
@@ -246,10 +243,9 @@ def description_other(item_number):
     db.close()
 
     df_real_1 = pd.read_csv("data/recipe_partial.csv")
-    print(df_real_1.loc[df_real_1["RecipeId"] == int(item_number)])
+    # print(df_real_1.loc[df_real_1["RecipeId"] == int(item_number)])
     # df_r = pd.read_csv("data/recipes.csv")
     rec_desc = df_real_1[df_real_1["RecipeId"] == int(item_number)]
-    print(rec_desc)
     recipe_desc_name = rec_desc["Name"].values[0]
     recipe_desc_author = rec_desc["AuthorName"].values[0]
     recipe_desc_category = rec_desc["RecipeCategory"].values[0]
@@ -474,12 +470,8 @@ def epsilon_api():
     recipe_ids = []
     for data in extract_recipes:
         recipe_ids.append(read_pred_data["recipe_id"][data])
-
     df_rec = pd.read_csv("data/recipes.csv")
-
     final_display = df_rec.loc[df_rec["RecipeId"].isin(recipe_ids)]
-
-    print(recipe_ids)
     return render_template("test.html", recipeId=final_display["RecipeId"])
 
 
@@ -564,9 +556,7 @@ def recipe_filter_fridge(user_id):
     for i in range(len(prediction_of_recipe_cat)):
         if prediction_of_recipe_cat[i].est > 4.7:
             predicted_recipe_id.append(prediction_of_recipe_cat[i].iid)
-    print(df_return)
     predicted_result_list_filter = df_return.loc[df_return.index.intersection(predicted_recipe_id)]
-    print(predicted_result_list_filter)
     sim_id = list(predicted_result_list_filter["RecipeId"])
     sim_names = list(predicted_result_list_filter["Name"])
     sim_review_count = list(predicted_result_list_filter["ReviewCount"])
